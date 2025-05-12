@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from './context/AuthContext';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
-const REACT_APP_API_BASE_URL = 'http://localhost:5001';
+const REACT_APP_API_BASE_URL = "http://localhost:5001";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -27,15 +27,16 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-[#FFF8F8] flex items-center justify-center p-4">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Welcome Back!</h2>
-        {error && (
-          <div className="mb-4 text-red-600 text-center">
-            {error}
-          </div>
-        )}
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+          Welcome Back!
+        </h2>
+        {error && <div className="mb-4 text-red-600 text-center">{error}</div>}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -50,7 +51,10 @@ const LoginPage = () => {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -72,12 +76,18 @@ const LoginPage = () => {
                 name="remember-me"
                 className="h-4 w-4 text-[#FE6059] focus:ring-[#FE6059] border-gray-300 rounded"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-900"
+              >
                 Remember me
               </label>
             </div>
             <div className="text-sm">
-              <a href="#" className="font-medium text-[#FE6059] hover:text-red-600">
+              <a
+                href="#"
+                className="font-medium text-[#FE6059] hover:text-red-600"
+              >
                 Forgot your password?
               </a>
             </div>
@@ -93,8 +103,11 @@ const LoginPage = () => {
         </form>
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <Link to="/Signup" className="font-medium text-[#FE6059] hover:text-red-600">
+            Don't have an account?{" "}
+            <Link
+              to="/Signup"
+              className="font-medium text-[#FE6059] hover:text-red-600"
+            >
               Sign up
             </Link>
           </p>
@@ -104,4 +117,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginPage;

@@ -3,10 +3,24 @@ import axios from "axios";
 import { AuthContext } from "./context/AuthContext";
 import create from "./assets/2842708.jpg";
 import { CSVLink } from "react-csv";
-import { 
-  FaHeading, FaUser, FaEnvelope, FaHome, FaPhone, FaCalendarAlt, FaTextHeight,
-  FaAlignLeft, FaList, FaDotCircle, FaCheckSquare, FaHashtag, FaImage, FaFileUpload,
-  FaClock, FaPaperPlane, FaTimes 
+import {
+  FaHeading,
+  FaUser,
+  FaEnvelope,
+  FaHome,
+  FaPhone,
+  FaCalendarAlt,
+  FaTextHeight,
+  FaAlignLeft,
+  FaList,
+  FaDotCircle,
+  FaCheckSquare,
+  FaHashtag,
+  FaImage,
+  FaFileUpload,
+  FaClock,
+  FaPaperPlane,
+  FaTimes,
 } from "react-icons/fa";
 
 import Sentiment from "sentiment";
@@ -25,7 +39,7 @@ export default function Response() {
 
   const [formTitle, setFormTitle] = useState("");
   const [formFields, setFormFields] = useState([]);
-
+ 
   useEffect(() => {
     const fetchForms = async () => {
       try {
@@ -42,30 +56,30 @@ export default function Response() {
     };
     fetchForms();
   }, [auth.token, REACT_APP_API_BASE_URL]);
-useEffect(() => {
-  if (activeTab === "analysis" && responses.length > 0) {
-    const sentiment = new Sentiment();
-    let allText = "";
-    responses.forEach((response) => {
-      if (response.responses && typeof response.responses === "object") {
-        Object.values(response.responses).forEach((val) => {
-          if (typeof val === "string") {
-            allText += " " + val;
-          }
-        });
-      }
-    });
-    const result = sentiment.analyze(allText);
-    setAnalysisResults(result);
-  }
-}, [activeTab, responses]);
+  useEffect(() => {
+    if (activeTab === "analysis" && responses.length > 0) {
+      const sentiment = new Sentiment();
+      let allText = "";
+      responses.forEach((response) => {
+        if (response.responses && typeof response.responses === "object") {
+          Object.values(response.responses).forEach((val) => {
+            if (typeof val === "string") {
+              allText += " " + val;
+            }
+          });
+        }
+      });
+      const result = sentiment.analyze(allText);
+      setAnalysisResults(result);
+    }
+  }, [activeTab, responses]);
   useEffect(() => {
     if (selectedForm) {
       setFormTitle(selectedForm.title || "");
       setFormFields(
         (selectedForm.fields || []).map((field, index) => ({
           ...field,
-          id: field.id || Date.now() + index
+          id: field.id || Date.now() + index,
         }))
       );
     }
@@ -82,9 +96,9 @@ useEffect(() => {
             }
           );
           setResponses(res.data);
-          const csvData = res.data.map(response => ({
+          const csvData = res.data.map((response) => ({
             ...response.responses,
-            responseId: response._id
+            responseId: response._id,
           }));
           setCsvData(csvData);
         } catch (err) {
@@ -104,7 +118,9 @@ useEffect(() => {
 
   const updateLabel = (id, newLabel) => {
     setFormFields(
-      formFields.map((field) => (field.id === id ? { ...field, label: newLabel } : field))
+      formFields.map((field) =>
+        field.id === id ? { ...field, label: newLabel } : field
+      )
     );
   };
 
@@ -125,7 +141,10 @@ useEffect(() => {
     setFormFields(
       formFields.map((field) => {
         if (field.id === fieldId) {
-          return { ...field, options: [...field.options, `Option ${field.options.length + 1}`] };
+          return {
+            ...field,
+            options: [...field.options, `Option ${field.options.length + 1}`],
+          };
         }
         return field;
       })
@@ -137,16 +156,16 @@ useEffect(() => {
   };
 
   const handleUpdateForm = async () => {
-    const preparedFields = formFields.map(field => ({
+    const preparedFields = formFields.map((field) => ({
       label: field.label,
       name: field.label.replace(/\s+/g, "").toLowerCase(),
       type: field.type,
-      options: field.options
+      options: field.options,
     }));
     const updatedData = { title: formTitle, fields: preparedFields };
     try {
       const res = await axios.put(
-        `${REACT_APP_API_BASE_URL}/api/form/${selectedForm._id}`, 
+        `${REACT_APP_API_BASE_URL}/api/form/${selectedForm._id}`,
         updatedData,
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );
@@ -163,10 +182,10 @@ useEffect(() => {
       <div className="min-h-screen bg-[#FFF8F8] p-8">
         <h2 className="text-3xl font-bold text-center mb-8">My Forms</h2>
         <img
-                  src={create}
-                  alt="Dashboard Illustration"
-                  className="mt-6 w-full max-w-md mx-auto rounded-lg shadow-md"
-                />
+          src={create}
+          alt="Dashboard Illustration"
+          className="mt-6 w-full max-w-md mx-auto rounded-lg shadow-md"
+        />
         <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {forms.map((form) => (
             <div
@@ -183,13 +202,13 @@ useEffect(() => {
               </h3>
               {form._id && (
                 <a
-                href={`${window.location.origin}/form/${form._id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-2 text-blue-600 font-semibold px-3 py-1 border-b-2 border-blue-600 rounded hover:bg-blue-50 transition-colors"
-              >
-                Link to the form
-              </a>
+                  href={`${window.location.origin}/form/${form._id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 text-blue-600 font-semibold px-3 py-1 border-b-2 border-blue-600 rounded hover:bg-blue-50 transition-colors"
+                >
+                  Link to the form
+                </a>
               )}
             </div>
           ))}
@@ -244,12 +263,14 @@ useEffect(() => {
           </button>
         </div>
         {/* Tab Content */}
-        
+
         {activeTab === "analysis" && (
           <div>
             {analysisResults ? (
               <div className="p-4 bg-gray-100 rounded">
-                <h4 className="font-bold mb-2 text-gray-800">Analysis Results</h4>
+                <h4 className="font-bold mb-2 text-gray-800">
+                  Analysis Results
+                </h4>
                 <p>
                   <span className="font-semibold">Score: </span>
                   {analysisResults.score}
@@ -272,16 +293,21 @@ useEffect(() => {
                 )}
               </div>
             ) : (
-              <p className="text-gray-600">No analysis available. Please ensure there are responses with text.</p>
+              <p className="text-gray-600">
+                No analysis available. Please ensure there are responses with
+                text.
+              </p>
             )}
           </div>
-        )}   
+        )}
         {/* Tab Content */}
         {activeTab === "edit" && (
           <div className="flex">
             {/* Components Column */}
             <div className="w-1/4 p-4 bg-white shadow-md mr-4">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Components</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                Components
+              </h2>
               {[
                 { type: "Heading", icon: <FaHeading /> },
                 { type: "Fullname", icon: <FaUser /> },
@@ -310,7 +336,9 @@ useEffect(() => {
               ))}
             </div>
             <div className="w-3/4 p-4">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Form Preview</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                Form Preview
+              </h2>
               <div className="mb-4">
                 <input
                   type="text"
@@ -394,11 +422,17 @@ useEffect(() => {
                     <div>
                       {field.options.map((option, index) => (
                         <div key={index} className="flex items-center mb-1">
-                          <input type="radio" name={`single-${field.id}`} className="mr-2" />
+                          <input
+                            type="radio"
+                            name={`single-${field.id}`}
+                            className="mr-2"
+                          />
                           <input
                             type="text"
                             value={option}
-                            onChange={(e) => updateOption(field.id, index, e.target.value)}
+                            onChange={(e) =>
+                              updateOption(field.id, index, e.target.value)
+                            }
                             className="border border-gray-300 rounded-md px-2 py-1"
                           />
                         </div>
@@ -420,7 +454,9 @@ useEffect(() => {
                           <input
                             type="text"
                             value={option}
-                            onChange={(e) => updateOption(field.id, index, e.target.value)}
+                            onChange={(e) =>
+                              updateOption(field.id, index, e.target.value)
+                            }
                             className="border border-gray-300 rounded-md px-2 py-1"
                           />
                         </div>
@@ -488,16 +524,19 @@ useEffect(() => {
                       <h4 className="font-bold mb-2 text-gray-800">
                         Response ID: {response._id}
                       </h4>
-                      {response.responses && typeof response.responses === "object" ? (
+                      {response.responses &&
+                      typeof response.responses === "object" ? (
                         <div className="space-y-1">
-                          {Object.entries(response.responses).map(([field, value]) => (
-                            <div key={field} className="flex">
-                              <span className="font-semibold mr-2 text-gray-700">
-                                {field}:
-                              </span>
-                              <span className="text-gray-600">{value}</span>
-                            </div>
-                          ))}
+                          {Object.entries(response.responses).map(
+                            ([field, value]) => (
+                              <div key={field} className="flex">
+                                <span className="font-semibold mr-2 text-gray-700">
+                                  {field}:
+                                </span>
+                                <span className="text-gray-600">{value}</span>
+                              </div>
+                            )
+                          )}
                         </div>
                       ) : (
                         <p className="text-gray-600">No data provided</p>
@@ -513,6 +552,7 @@ useEffect(() => {
                 >
                   Export as CSV
                 </CSVLink>
+               
               </div>
             )}
           </div>

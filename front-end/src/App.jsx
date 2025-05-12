@@ -9,7 +9,6 @@ import LoginPage from "./login";
 import Signup from "./signup";
 import PostLoginLayout from "./postloginlayout";
 import Dashboard from "./dashboard";
-import Projects from "./projects";
 import FormBuilder from "./FormBuilder";
 import Response from "./response";
 import FormFill from "./FormFill";

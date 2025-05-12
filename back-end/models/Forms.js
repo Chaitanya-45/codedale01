@@ -7,6 +7,7 @@ const FormSchema = new mongoose.Schema({
       label: { type: String, required: true },
       name: { type: String, required: true },
       type: { type: String, required: true },
+      options: { type: [String], default: [] },
     },
   ],
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
