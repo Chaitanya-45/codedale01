@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="bg-[#FFF8F8] py-17 px-8 flex items-center justify-center">
+    <section className="bg-white py-17 px-8 flex items-center justify-center">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 text-left">
           <h1 className="text-3xl font-bold text-gray-900 leading-tight">

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function CampaignSection() {
   return (
-    <section className="bg-[#FFF8F8] py-16 px-8">
+    <section className="bg-white py-16 px-8">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 flex justify-center">
           <img src={hero2} alt="Campaign" className="rounded-lg" />
