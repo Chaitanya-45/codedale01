@@ -5,7 +5,7 @@ import axios from "axios";
 import create from "./assets/11554177.jpg";
 import { AuthContext } from "./context/AuthContext";
 
-const REACT_APP_API_BASE_URL = "http://localhost:5001";
+const REACT_APP_API_BASE_URL = "https://dotform-backend.onrender.com";
 
 export default function Dashboard() {
   const { auth, logout } = useContext(AuthContext);
