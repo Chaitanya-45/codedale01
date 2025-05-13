@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "route": "/form/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ],
+  "defaultHeaders": {
+    "cache-control": "must-revalidate, max-age=0"
+  }
+}
