@@ -35,7 +35,7 @@ export default function Response() {
 
   const { auth } = useContext(AuthContext);
   const REACT_APP_API_BASE_URL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+    import.meta.env.VITE_API_BASE_URL || "https://dotform-backend.onrender.com";
 
   const [formTitle, setFormTitle] = useState("");
   const [formFields, setFormFields] = useState([]);
