@@ -13,16 +13,21 @@ export default function FormFill() {
   useEffect(() => {
     async function fetchForm() {
       try {
-        const res = await axios.get(
-          `${REACT_APP_API_BASE_URL}/api/form/${formId}`
-        );
-        setForm(res.data);
+        const res = await axios.get(`https://dotform-backend.onrender.com/api/form/${formId}`);
+        setForm(response.data);
       } catch (err) {
         console.error("Error fetching form", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     }
     fetchForm();
   }, [formId]);
+
+  if (loading) return <div>Loading form...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!form) return <div>Form not found</div>;
 
   const handleChange = (fieldName, value) => {
     setResponses((prev) => ({ ...prev, [fieldName]: value }));
