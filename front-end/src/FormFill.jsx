@@ -9,12 +9,14 @@ export default function FormFill() {
   const [form, setForm] = useState(null);
   const [responses, setResponses] = useState({});
   const [submitMsg, setSubmitMsg] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchForm() {
       try {
         const res = await axios.get(`https://dotform-backend.onrender.com/api/form/${formId}`);
-        setForm(response.data);
+        setForm(res.data);
       } catch (err) {
         console.error("Error fetching form", err);
         setError(err.message);

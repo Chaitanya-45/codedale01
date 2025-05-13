@@ -10,7 +10,10 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://dotform-frontend.onrender.com', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
