@@ -117,12 +117,15 @@ router.delete("/:id", auth, async (req, res) => {
     if (form.author.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized to delete this form" });
     }
+    
+    await FormResponse.deleteMany({ form: req.params.id });
+    
     await Form.findByIdAndRemove(req.params.id);
     
     res.json({ msg: "Form deleted successfully" });
   } catch (err) {
     console.error("Error deleting form:", err);
-    res.status(500).json({ msg: "Server error" });
+    res.status(500).json({ msg: "Server error", error: err.message });
   }
 });
 

@@ -95,19 +95,23 @@ export default function Dashboard() {
   };
 
   const handleDeleteForm = async () => {
-    try {
-      await axios.delete(`${REACT_APP_API_BASE_URL}/api/form/${formToDelete}`, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
-      setForms(forms.filter(form => form._id !== formToDelete));
-      
-      setIsDeleteDialogOpen(false);
-      setFormToDelete(null);
-    } catch (error) {
-      console.error("Failed to delete form", error);
-      alert("Error deleting form");
-    }
-  };
+  try {
+    console.log(`Attempting to delete form: ${formToDelete}`);
+    
+    const response = await axios.delete(`${REACT_APP_API_BASE_URL}/api/form/${formToDelete}`, {
+      headers: { Authorization: `Bearer ${auth.token}` },
+    });
+    
+    console.log("Delete response:", response.data);
+    setForms(forms.filter(form => form._id !== formToDelete));
+    
+    setIsDeleteDialogOpen(false);
+    setFormToDelete(null);
+  } catch (error) {
+    console.error("Failed to delete form", error.response?.data || error.message);
+    alert(`Error deleting form: ${error.response?.data?.msg || error.message}`);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#FFF8F8] flex flex-col items-center p-8">
@@ -158,7 +162,7 @@ export default function Dashboard() {
               <p className="text-gray-600 mb-4">{form.description}</p>
               {form._id && (
                 <a
-                  href={`${window.location.origin}/form/${form._id}`}
+                  href={`${window.location.origin}/?formId=${form._id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-2 text-blue-600 font-semibold px-3 py-1 border-b-2 border-blue-600 rounded hover:bg-blue-50 transition-colors"
