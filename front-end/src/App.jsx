@@ -1,4 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, useSearchParams, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useSearchParams,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./navbar";
 import HeroSection from "./herosection";
 import DepartmentsSection from "./DepartmentsSection";
@@ -15,12 +21,12 @@ import FormFill from "./FormFill";
 
 function RootRoute() {
   const [searchParams] = useSearchParams();
-  const formId = searchParams.get('formId');
-  
+  const formId = searchParams.get("formId");
+
   if (formId) {
     return <FormFill formId={formId} />;
   }
-  
+
   return (
     <>
       <Navbar />
@@ -37,23 +43,11 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Navbar />
-              <HeroSection />
-              <DepartmentsSection />
-              <CampaignSection />
-              <SlidesSection />
-              <Footer />
-            </>
-          }
-        />
+        <Route path="/" element={<RootRoute />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/form/:formId" element={<FormFill />} />
 
+        <Route path="/form/:formId" element={<FormFill />} />
 
         <Route element={<PostLoginLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
