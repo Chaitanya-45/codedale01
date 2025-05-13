@@ -32,13 +32,13 @@ export default function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/form/:formId" element={<FormFill />} />
+
 
         <Route element={<PostLoginLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/FormBuilder" element={<FormBuilder />} />
           <Route path="/response" element={<Response />} />
-          <Route path="/form/:formId" element={<FormFill />} />
-
         </Route>
       </Routes>
     </Router>
