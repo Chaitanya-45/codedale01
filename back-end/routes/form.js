@@ -120,7 +120,7 @@ router.delete("/:id", auth, async (req, res) => {
     
     await FormResponse.deleteMany({ form: req.params.id });
     
-    await Form.findByIdAndRemove(req.params.id);
+    await Form.findByIdAndDelete(req.params.id);
     
     res.json({ msg: "Form deleted successfully" });
   } catch (err) {
