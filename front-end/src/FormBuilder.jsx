@@ -75,7 +75,7 @@ export default function FormBuilder() {
         formData,
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );
-      const link = `${window.location.origin}/form/${res.data._id}`;
+      const link = `${window.location.origin}/?formId=${res.data._id}`;
       setShareableLink(link);
     } catch (error) {
       console.error("Error creating form", error);
