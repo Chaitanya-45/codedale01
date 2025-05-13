@@ -3,7 +3,7 @@ import { AuthContext } from "./context/AuthContext";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const REACT_APP_API_BASE_URL = "http://localhost:5001";
+const REACT_APP_API_BASE_URL = "https://dotform-backend.onrender.com";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
