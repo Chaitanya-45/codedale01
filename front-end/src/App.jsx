@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useSearchParams, Navigate } from "react-router-dom";
 import Navbar from "./navbar";
 import HeroSection from "./herosection";
 import DepartmentsSection from "./DepartmentsSection";
@@ -12,6 +12,26 @@ import Dashboard from "./dashboard";
 import FormBuilder from "./FormBuilder";
 import Response from "./response";
 import FormFill from "./FormFill";
+
+function RootRoute() {
+  const [searchParams] = useSearchParams();
+  const formId = searchParams.get('formId');
+  
+  if (formId) {
+    return <FormFill formId={formId} />;
+  }
+  
+  return (
+    <>
+      <Navbar />
+      <HeroSection />
+      <DepartmentsSection />
+      <CampaignSection />
+      <SlidesSection />
+      <Footer />
+    </>
+  );
+}
 
 export default function App() {
   return (

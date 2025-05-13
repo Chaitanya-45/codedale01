@@ -4,8 +4,9 @@ import axios from "axios";
 
 const REACT_APP_API_BASE_URL = "https://dotform-backend.onrender.com";
 
-export default function FormFill() {
-  const { formId } = useParams();
+export default function FormFill({ formId: propFormId }) {
+  const { formId: paramFormId } = useParams();
+  const formId = propFormId || paramFormId;
   const [form, setForm] = useState(null);
   const [responses, setResponses] = useState({});
   const [submitMsg, setSubmitMsg] = useState("");
