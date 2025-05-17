@@ -44,14 +44,18 @@ export default function Response() {
   const [formFields, setFormFields] = useState([]);
 
   useEffect(() => {
-    if (selectedFormId && forms.length > 0) {
-      const form = forms.find(f => f._id === selectedFormId);
-      if (form) {
-        setSelectedForm(form);
-        setActiveTab("view");
-      }
+  console.log("Selected form ID from navigation:", selectedFormId);
+  console.log("Available forms:", forms);
+  
+  if (selectedFormId && forms.length > 0) {
+    const form = forms.find(f => f._id === selectedFormId);
+    console.log("Found matching form:", form);
+    if (form) {
+      setSelectedForm(form);
+      setActiveTab("view");
     }
-  }, [selectedFormId, forms]);
+  }
+}, [selectedFormId, forms]);
  
   useEffect(() => {
     const fetchForms = async () => {
@@ -67,7 +71,9 @@ export default function Response() {
         console.error("Error fetching forms", err);
       }
     };
-    fetchForms();
+    if (auth && auth.token) {
+      fetchForms();
+    }
   }, [auth.token, REACT_APP_API_BASE_URL]);
   useEffect(() => {
     if (activeTab === "analysis" && responses.length > 0) {
@@ -215,7 +221,7 @@ export default function Response() {
               </h3>
               {form._id && (
                 <a
-                  href={`${window.location.origin}/form/${form._id}`}
+                  href={`${window.location.origin}/?formId=${form._id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-2 text-blue-600 font-semibold px-3 py-1 border-b-2 border-blue-600 rounded hover:bg-blue-50 transition-colors"

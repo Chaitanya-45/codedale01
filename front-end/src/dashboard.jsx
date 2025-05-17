@@ -148,7 +148,7 @@ export default function Dashboard() {
   >
     <button
       onClick={(e) => {
-        e.stopPropagation(); // Prevent card click when clicking delete button
+        e.stopPropagation(); 
         setFormToDelete(form._id);
         setIsDeleteDialogOpen(true);
       }}
@@ -162,7 +162,7 @@ export default function Dashboard() {
     </h3>
     <p className="text-gray-600 mb-4">{form.description}</p>
     <a
-      onClick={(e) => e.stopPropagation()} // Prevent card click when clicking link
+      onClick={(e) => e.stopPropagation()} 
       href={`${window.location.origin}/?formId=${form._id}`}
       target="_blank"
       rel="noopener noreferrer"
