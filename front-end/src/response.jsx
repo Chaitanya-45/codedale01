@@ -22,8 +22,10 @@ import {
   FaClock,
   FaPaperPlane,
   FaTimes,
+  FaTrash,
 } from "react-icons/fa";
 
+import { Dialog } from "@headlessui/react";
 import Sentiment from "sentiment";
 
 export default function Response() {
@@ -35,6 +37,9 @@ export default function Response() {
   const [responses, setResponses] = useState([]);
   const [csvData, setCsvData] = useState([]);
   const [analysisResults, setAnalysisResults] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [formToDelete, setFormToDelete] = useState(null);
+
 
   const { auth } = useContext(AuthContext);
   const REACT_APP_API_BASE_URL =
@@ -42,6 +47,29 @@ export default function Response() {
 
   const [formTitle, setFormTitle] = useState("");
   const [formFields, setFormFields] = useState([]);
+
+  const handleDeleteForm = async () => {
+    try {
+      console.log(`Attempting to delete form: ${formToDelete}`);
+      
+      const response = await axios.delete(`${REACT_APP_API_BASE_URL}/api/form/${formToDelete}`, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      });
+      
+      console.log("Delete response:", response.data);
+      setForms(forms.filter(form => form._id !== formToDelete));
+      
+      if (selectedForm && selectedForm._id === formToDelete) {
+        setSelectedForm(null);
+      }
+      
+      setIsDeleteDialogOpen(false);
+      setFormToDelete(null);
+    } catch (error) {
+      console.error("Failed to delete form", error.response?.data || error.message);
+      alert(`Error deleting form: ${error.response?.data?.msg || error.message}`);
+    }
+  };
 
   useEffect(() => {
   console.log("Selected form ID from navigation:", selectedFormId);
@@ -216,6 +244,17 @@ export default function Response() {
               }}
               className="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer"
             >
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  setFormToDelete(form._id);
+                  setIsDeleteDialogOpen(true);
+                }}
+                className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                aria-label="Delete form"
+              >
+                <FaTrash />
+              </button>
               <h3 className="text-xl font-semibold mb-2 text-gray-800">
                 {form.title}
               </h3>
@@ -232,6 +271,41 @@ export default function Response() {
             </div>
           ))}
         </div>
+        <Dialog
+          open={isDeleteDialogOpen}
+          onClose={() => setIsDeleteDialogOpen(false)}
+          className="relative z-50"
+        >
+          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+          
+          <div className="fixed inset-0 flex items-center justify-center p-4">
+            <Dialog.Panel className="mx-auto max-w-sm rounded bg-white p-6">
+              <Dialog.Title className="text-lg font-medium text-gray-900">
+                Delete Form
+              </Dialog.Title>
+              <Dialog.Description className="mt-2 text-sm text-gray-500">
+                Are you sure you want to delete this form? This action cannot be undone.
+              </Dialog.Description>
+
+              <div className="mt-4 flex space-x-4 justify-end">
+                <button
+                  type="button"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                  onClick={() => setIsDeleteDialogOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                  onClick={handleDeleteForm}
+                >
+                  Delete
+                </button>
+              </div>
+            </Dialog.Panel>
+          </div>
+        </Dialog>
       </div>
     );
   }
