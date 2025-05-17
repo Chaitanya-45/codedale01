@@ -141,37 +141,37 @@ export default function Dashboard() {
       <div className="w-full max-w-4xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {forms.map((form) => (
-            <div
-              key={form._id}
-              className="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow relative"
-            >
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setFormToDelete(form._id);
-                  setIsDeleteDialogOpen(true);
-                }}
-                className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                aria-label="Delete form"
-              >
-                <FaTrash />
-              </button>
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                {form.title}
-              </h3>
-              <p className="text-gray-600 mb-4">{form.description}</p>
-              {form._id && (
-                <a
-                  href={`${window.location.origin}/?formId=${form._id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-2 text-blue-600 font-semibold px-3 py-1 border-b-2 border-blue-600 rounded hover:bg-blue-50 transition-colors"
-                >
-                  Link to the form
-                </a>
-              )}
-            </div>
-          ))}
+  <div
+    key={form._id}
+    onClick={() => navigate('/response', { state: { selectedFormId: form._id } })}
+    className="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow relative cursor-pointer"
+  >
+    <button
+      onClick={(e) => {
+        e.stopPropagation(); // Prevent card click when clicking delete button
+        setFormToDelete(form._id);
+        setIsDeleteDialogOpen(true);
+      }}
+      className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+      aria-label="Delete form"
+    >
+      <FaTrash />
+    </button>
+    <h3 className="text-xl font-semibold mb-2 text-gray-800">
+      {form.title}
+    </h3>
+    <p className="text-gray-600 mb-4">{form.description}</p>
+    <a
+      onClick={(e) => e.stopPropagation()} // Prevent card click when clicking link
+      href={`${window.location.origin}/?formId=${form._id}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block mt-2 text-blue-600 font-semibold px-3 py-1 border-b-2 border-blue-600 rounded hover:bg-blue-50 transition-colors"
+    >
+      Link to the form
+    </a>
+  </div>
+))}
         </div>
       </div>
             <Dialog

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "./context/AuthContext";
 import create from "./assets/2842708.jpg";
@@ -26,6 +27,8 @@ import {
 import Sentiment from "sentiment";
 
 export default function Response() {
+  const location = useLocation();
+  const selectedFormId = location.state?.selectedFormId;
   const [forms, setForms] = useState([]);
   const [selectedForm, setSelectedForm] = useState(null);
   const [activeTab, setActiveTab] = useState("edit");
@@ -39,6 +42,16 @@ export default function Response() {
 
   const [formTitle, setFormTitle] = useState("");
   const [formFields, setFormFields] = useState([]);
+
+  useEffect(() => {
+    if (selectedFormId && forms.length > 0) {
+      const form = forms.find(f => f._id === selectedFormId);
+      if (form) {
+        setSelectedForm(form);
+        setActiveTab("view");
+      }
+    }
+  }, [selectedFormId, forms]);
  
   useEffect(() => {
     const fetchForms = async () => {
