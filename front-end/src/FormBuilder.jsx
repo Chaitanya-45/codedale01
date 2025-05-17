@@ -94,7 +94,6 @@ export default function FormBuilder() {
           { type: "Date picker", icon: <FaCalendarAlt /> },
           { type: "Short text", icon: <FaTextHeight /> },
           { type: "Long text", icon: <FaAlignLeft /> },
-          { type: "Drop down", icon: <FaList /> },
           { type: "Single choice", icon: <FaDotCircle /> },
           { type: "Multiple choice", icon: <FaCheckSquare /> },
           { type: "Number", icon: <FaHashtag /> },
@@ -192,13 +191,6 @@ export default function FormBuilder() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md"
                   disabled
                 />
-              )}
-              {field.type === "Drop down" && (
-                <select className="w-full px-4 py-2 border border-gray-300 rounded-md">
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                  <option>Option 3</option>
-                </select>
               )}
               {field.type === "Single choice" && (
                 <div>
